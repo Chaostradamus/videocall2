@@ -1,18 +1,16 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-
+import CallActionbox from '../../components/CallActionBox';
 
 const CallScreen = () => {
   return (
     <View style={styles.page}>
       <View style={styles.cameraPreview}>
-        <Text style={styles.name}>Zatanna</Text>
+        <Text style={styles.name}>Zatannaa</Text>
         <Text style={styles.phoneNumber}>ringing 6178721712</Text>
       </View>
 
-      <View style={styles.buttonsContainer}>
-      <Text>Icons</Text> 
-      </View>
+      <CallActionbox />
     </View>
   );
 };
@@ -38,12 +36,6 @@ const styles = StyleSheet.create({
   phoneNumber: {
     fontSize: 20,
     color: 'white',
-  },
-  buttonsContainer: {
-    backgroundColor: '#333333',
-    padding: 10,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
   },
 });
 
