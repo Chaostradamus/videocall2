@@ -1,26 +1,51 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CallActionbox = () => {
+  const [isCameraOn, setIsCameraOn] = useState(true);
+  const [isMicOn, setIsMicOn] = useState(true);
+
+  const onReverseCamera = () => {};
+
+  const onToggleCamera = () => {
+    setIsCameraOn(currentValue => !currentValue);
+  };
+
+  const onToggleMicrophone = () => {
+    setIsMicOn(currentValue => !currentValue);
+  };
+
+  const onHangup = () => {};
+
   return (
     <View style={styles.buttonsContainer}>
-      <View style={styles.iconButton}>
+      <Pressable onPress={onReverseCamera} style={styles.iconButton}>
         <Ionicons name="ios-camera-reverse" size={30} color={'white'} />
-      </View>
+      </Pressable>
 
-      <View style={styles.iconButton}>
-        <MaterialIcons name="camera-off" size={30} color={'white'} />
-      </View>
+      <Pressable onPress={onToggleCamera} style={styles.iconButton}>
+        <MaterialIcons
+          name={isCameraOn ? 'camera-off' : 'camera'}
+          size={30}
+          color={'white'}
+        />
+      </Pressable>
 
-      <View style={styles.iconButton}>
-        <MaterialIcons name="microphone-off" size={30} color={'white'} />
-      </View>
+      <Pressable onPress={onToggleMicrophone} style={styles.iconButton}>
+        <MaterialIcons
+          name={isMicOn ? 'microphone-off' : 'microphone'}
+          size={30}
+          color={'white'}
+        />
+      </Pressable>
 
-      <View style={[styles.iconButton, {backgroundColor: 'red'}]}>
+      <Pressable
+        onPress={onHangup}
+        style={[styles.iconButton, {backgroundColor: 'red'}]}>
         <MaterialIcons name="phone-hangup" size={30} color={'white'} />
-      </View>
+      </Pressable>
     </View>
   );
 };
