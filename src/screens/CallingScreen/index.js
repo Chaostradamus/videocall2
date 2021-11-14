@@ -1,17 +1,51 @@
-import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  PermissionsAndroid,
+  Alert,
+  Platform,
+} from 'react-native';
 import CallActionbox from '../../components/CallActionBox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation, useRoute} from '@react-navigation/core';
 
-const CallScreen = () => {
+const permissions = [
+  PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+  PermissionsAndroid.PERMISSIONS.CAMERA,
+];
+
+const CallingScreen = () => {
+  const [permissionGranted, setPermissionGranted] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const user = route?.params?.user;
 
   const goBack = () => {
-    navigation.goBack();
+    navigation.pop();
   };
+
+  useEffect(() => {
+    const getPermissions = async () => {
+      const granted = await PermissionsAndroid.requestMultiple(permissions);
+      const recordAudioGranted =
+        granted[PermissionsAndroid.PERMISSIONS.RECORD_AUDIO] === 'granted';
+      const cameraGranted =
+        granted[PermissionsAndroid.PERMISSIONS.CAMERA] === 'granted';
+      if (!cameraGranted || !recordAudioGranted) {
+        Alert.alert('Permissions not granted');
+      } else {
+        setPermissionGranted(true);
+      }
+    };
+    if (Platform.OS === 'android') {
+      getPermissions();
+    } else {
+      setPermissionGranted(true)
+    }
+  }, []);
 
   return (
     <View style={styles.page}>
@@ -58,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CallScreen;
+export default CallingScreen;
