@@ -24,6 +24,8 @@ const LoginScreen = () => {
       console.log(status);
       if (status === Voximplant.ClientState.DISCONNECTED) {
         await voximplant.connect();
+      } else if (status === Voximplant.ClientState.LOGGED_IN) {
+        redirectHome();
       }
     };
     connect();
@@ -42,9 +44,15 @@ const LoginScreen = () => {
   };
 
   const redirectHome = () => {
-    navigation.navigate('Contacts');
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: 'Contacts',
+        },
+      ],
+    });
   };
-
 
   return (
     <View style={styles.page}>
